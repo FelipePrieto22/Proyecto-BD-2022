@@ -1,6 +1,6 @@
 ﻿Integrantes: Hernan Cornejo
              Felipe Prieto
-             Alejandro Villagran
+             Alejandro Villagrán
              
 Nombre Región: Región del ñuble
 
