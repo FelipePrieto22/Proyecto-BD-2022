@@ -1,6 +1,7 @@
 ﻿Integrantes: Hernan Cornejo
              Felipe Prieto
              Alejandro Villagran
+             
 Nombre Región: Región del ñuble
 
 
@@ -76,8 +77,6 @@ Comuna: Coihueco
 
         nombre: Municipalidad de Coihueco 
   	url: https://www.municoihueco.cl/noticias.html 
-
-
 
 
 
