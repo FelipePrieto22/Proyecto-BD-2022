@@ -11,8 +11,8 @@ Comuna: Chillan
 	nombre: Chillan Activo  
    	url: http://www.chillanactivo.cl/
 
-        nombre: Chillán online Noticia  
-  	url: http://portal.chillanonline.cl/
+        nombre: Chillán online
+  	url: https://www.chillanonline.cl/V6/
  
         nombre: La Discusión de Chillán  
 	url: http://www.ladiscusion.cl/
