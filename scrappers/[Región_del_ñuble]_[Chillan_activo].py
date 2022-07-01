@@ -4,13 +4,21 @@ from requests_html import HTMLSession
 import time
 import mysql.connector as mariadb
 import sys
-from datetime import datetime
+import datetime
 
 #Formatear las fechas
 def format_date(date):
-    # objDate = datetime.strptime((date.split("T")[0])[0], '%m/%d/%y')
-    # print(objDate)
-    return((date.split("T")[0]))
+    fecha = date.split("T")[0]
+    fecha_split = fecha.split("-")
+    # print(fecha_split)
+    """ f = ""
+    for i in range(len(fecha_split)-1,-1,-1):
+        if(i == 0):
+            f += fecha_split[i] 
+        else:
+            f += fecha_split[i] + "-"
+         """
+    return(fecha_split)
 
 def formatoTexto(contenido):
     text = "";
@@ -36,17 +44,14 @@ def obtenerDatosUrl(url):
     contenido = response.html.xpath(xpath_contenido)
     texto = formatoTexto(contenido)
 
-    """ print(url) """
-    """ print(texto) """
-
     print(fecha)
+    fecha = datetime.date(int(fecha[0]), int(fecha[1]), int(fecha[2]))
+    print(fecha)
+    
+    # print(datetime.date(int(fecha[2]),int(fecha[1]),int(fecha[0])))
+    # fecha = '2019/01/28'
 
-
-    cur.execute("INSERT INTO noticia(url,titulo,contenido) VALUES('{0}','{1}','{2}')".format(url,titulo[0],texto)) #insertar datos en BD
-
-#'08-05-22'
-
-
+    # cur.execute("INSERT INTO noticia(url,titulo,contenido,fecha_publicacion) VALUES('{0}','{1}','{2}',{3})".format(url,titulo[0],texto,fecha)) #insertar datos en BD
 
 # Connect to MariaDB Platform
 try:

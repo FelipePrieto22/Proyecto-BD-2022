@@ -26,7 +26,7 @@ cur.execute("INSERT INTO medio_de_prensa(nombre_medio, region,comuna, regional_o
 
 #Añadir a tabla noticia
 cur.execute("DELETE FROM noticia WHERE url = 'https://www.meganoticias.cl/nacional/379541-ipc-chile-mayo-2022-inflacion-en-chile-08-06-2022.html'")
-cur.execute("INSERT INTO noticia(url,fecha_Publicación,contenido,titulo) VALUES('https://www.meganoticias.cl/nacional/379541-ipc-chile-mayo-2022-inflacion-en-chile-08-06-2022.html','08-05-22','TEXTO','Inflación acumulada más alta en 28 años: IPC anota alza de 1,2%')")
+cur.execute("INSERT INTO noticia(url,fecha_publicacion,contenido,titulo) VALUES('https://www.meganoticias.cl/nacional/379541-ipc-chile-mayo-2022-inflacion-en-chile-08-06-2022.html','08-05-22','TEXTO','Inflación acumulada más alta en 28 años: IPC anota alza de 1,2%')")
 
 #Añadir a tabla dueño
 cur.execute("DELETE FROM dueño WHERE nombre_dueño ='Arnold Schwarzenegger'")

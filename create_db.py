@@ -18,10 +18,24 @@ except mariadb.Error as e:
 # Get Cursor
 cur = conn.cursor()
 
-# Create Database
-cur.execute("DROP DATABASE medios_de_prensa") #eliminar base de datos creada anteriormente
-query_create = "CREATE DATABASE medios_de_prensa" # comando para crear la base de datos
-cur.execute(query_create) # crear la base de datos
+cur.execute("SHOW DATABASES like 'medios_de_prensa'")
+
+registro=cur.fetchall()
+if registro:             #Condicion si existe algo o no, si exite algo 
+    print("Existe la base de datos")
+    # Create Database
+    cur.execute("DROP DATABASE medios_de_prensa") #eliminar base de datos creada anteriormente
+    print("Borrando base de datos existente...")
+    query_create = "CREATE DATABASE medios_de_prensa" # comando para crear la base de datos
+    cur.execute(query_create) # crear la base de datos
+    print("Nueva base de datos creada exitosamente...")
+
+else:     
+    print("No existe la base de datos")
+    # Create Database
+    query_create = "CREATE DATABASE medios_de_prensa" # comando para crear la base de datos
+    cur.execute(query_create) # crear la base de datos
+    print("Base de datos creada exitosamente...")
 
 cur.execute("USE medios_de_prensa") #usar la base de datos
 
