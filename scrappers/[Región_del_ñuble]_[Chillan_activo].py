@@ -6,25 +6,47 @@ import mysql.connector as mariadb
 import sys
 from datetime import datetime
 
+#Formatear las fechas
+def format_date(date):
+    # objDate = datetime.strptime((date.split("T")[0])[0], '%m/%d/%y')
+    # print(objDate)
+    return((date.split("T")[0]))
+
+def formatoTexto(contenido):
+    text = "";
+    for i in range(0,len(contenido)):
+        text += contenido[i] + "\n"
+
+    return text;
+
+
 def obtenerDatosUrl(url):
     session = HTMLSession()
-    print(url)
-
-
+    
     response = session.get("{}".format(url),headers=headers)
 
     xpath_fecha = "//div[@class='tdb-block-inner td-fix-index']/time/@datetime"
     fecha = response.html.xpath(xpath_fecha)
+    fecha = format_date(fecha[0])
 
-    print(format_date(fecha[0]))
-    cur.execute("INSERT INTO noticia(url,fecha_Publicación) VALUES('"+url+"',"+format_date(fecha[0])+")") #insertar datos en BD
-    
+    xpath_titulo = "//div[@class='tdb-block-inner td-fix-index']/h1/text()"
+    titulo = response.html.xpath(xpath_titulo)
 
-#Formatear las fechas
-def format_date(date):
-    objDate = datetime.strptime((date.split("T")[0])[0], '%m/%d/%y')
-    print(objDate)
-    return((date.split("T")[0]))
+    xpath_contenido = "//div[@class='tdb-block-inner td-fix-index']/p/text()" 
+    contenido = response.html.xpath(xpath_contenido)
+    texto = formatoTexto(contenido)
+
+    """ print(url) """
+    """ print(texto) """
+
+    print(fecha)
+
+
+    cur.execute("INSERT INTO noticia(url,titulo,contenido) VALUES('{0}','{1}','{2}')".format(url,titulo[0],texto)) #insertar datos en BD
+
+#'08-05-22'
+
+
 
 # Connect to MariaDB Platform
 try:
@@ -83,9 +105,7 @@ for i in range(1,2):
         cur.execute("DELETE FROM noticia WHERE url = '"+url+"'")
         obtenerDatosUrl(url);
         
-
-    time.sleep(2)
+    # time.sleep(2)
 
 conn.commit() 
 conn.close()
-

@@ -29,16 +29,16 @@ cur.execute("USE medios_de_prensa") #usar la base de datos
 cur.execute("CREATE TABLE medio_de_prensa(nombre_medio VARCHAR(32) NOT NULL, region VARCHAR(16), comuna VARCHAR(64), regional_o_local ENUM ('regional','local'), idioma VARCHAR(16), pais VARCHAR(16), PRIMARY KEY(nombre_medio))")
 
 #Table noticia
-cur.execute("CREATE TABLE noticia(url VARCHAR(256), fecha_Publicación DATE, contenido TEXT, titulo VARCHAR(64), PRIMARY KEY(url))")
+cur.execute("CREATE TABLE noticia(url VARCHAR(256), fecha_publicacion DATE, contenido TEXT, titulo VARCHAR(128), PRIMARY KEY(url))")
 
 #Tabla dueño
-cur.execute("CREATE TABLE dueño(es_persona BOOL,	nombre_dueño VARCHAR(32), PRIMARY KEY(nombre_dueño))")
+cur.execute("CREATE TABLE dueño(es_persona BOOL, nombre_dueño VARCHAR(32), PRIMARY KEY(nombre_dueño))")
 
 #Tabla persona
-cur.execute("CREATE TABLE persona(nombre VARCHAR(32), profesion VARCHAR(16), nacionalidad VARCHAR(16), fecha_de_nacimiento DATE, pagina_wikipedia_url VARCHAR(256))")
+cur.execute("CREATE TABLE persona(id_persona INT, nombre VARCHAR(32), profesion VARCHAR(16), nacionalidad VARCHAR(16), fecha_de_nacimiento DATE, pagina_wikipedia_url VARCHAR(256), PRIMARY KEY(id_persona))")
 
 #Tabla popularidad
-cur.execute("CREATE TABLE popularidad(fecha DATE, visitas INT)")
+cur.execute("CREATE TABLE popularidad(id_persona INT, fecha DATE, visitas INT, FOREIGN KEY(id_persona) REFERENCES persona(id_persona))")
 
 #Tabla tiene
 cur.execute("CREATE TABLE tiene(nombre_dueño VARCHAR(32), nombre_medio VARCHAR(32) NOT NULL, si_o_no BOOL, fecha_de_adquisicion DATE, FOREIGN KEY(nombre_dueño) REFERENCES dueño(nombre_dueño), FOREIGN KEY(nombre_medio) REFERENCES medio_de_prensa(nombre_medio))")
