@@ -10,15 +10,9 @@ import datetime
 def format_date(date):
     fecha = date.split("T")[0]
     fecha_split = fecha.split("-")
-    # print(fecha_split)
-    """ f = ""
-    for i in range(len(fecha_split)-1,-1,-1):
-        if(i == 0):
-            f += fecha_split[i] 
-        else:
-            f += fecha_split[i] + "-"
-         """
-    return(fecha_split)
+    fecha = datetime.date(int(fecha_split[0]), int(fecha_split[1]), int(fecha_split[2]))
+
+    return(fecha)
 
 def formatoTexto(contenido):
     text = "";
@@ -31,7 +25,7 @@ def formatoTexto(contenido):
 def obtenerDatosUrl(url):
     session = HTMLSession()
     
-    response = session.get("{}".format(url),headers=headers)
+    response = session.get("{}".format(url), headers = headers)
 
     xpath_fecha = "//div[@class='tdb-block-inner td-fix-index']/time/@datetime"
     fecha = response.html.xpath(xpath_fecha)
@@ -44,14 +38,7 @@ def obtenerDatosUrl(url):
     contenido = response.html.xpath(xpath_contenido)
     texto = formatoTexto(contenido)
 
-    print(fecha)
-    fecha = datetime.date(int(fecha[0]), int(fecha[1]), int(fecha[2]))
-    print(fecha)
-    
-    # print(datetime.date(int(fecha[2]),int(fecha[1]),int(fecha[0])))
-    # fecha = '2019/01/28'
-
-    # cur.execute("INSERT INTO noticia(url,titulo,contenido,fecha_publicacion) VALUES('{0}','{1}','{2}',{3})".format(url,titulo[0],texto,fecha)) #insertar datos en BD
+    cur.execute("INSERT INTO noticia(url,titulo,contenido,fecha_publicacion) VALUES('{0}','{1}','{2}','{3}')".format(url,titulo[0],texto,fecha)) #insertar datos en BD
 
 # Connect to MariaDB Platform
 try:
@@ -105,10 +92,10 @@ xpath_url="//div[@class='td-module-thumb']/a/@href"
 for i in range(1,2):
     response = session.get("{}{}".format(URL_SEED,i),headers=headers)
     all_urls = response.html.xpath(xpath_url)
-    """ print(all_urls) """
     for url in all_urls:
-        cur.execute("DELETE FROM noticia WHERE url = '"+url+"'")
-        obtenerDatosUrl(url);
+        print(url)
+        """ cur.execute("DELETE FROM noticia WHERE url = '"+url+"'") """
+        """ obtenerDatosUrl(url); """
         
     # time.sleep(2)
 
