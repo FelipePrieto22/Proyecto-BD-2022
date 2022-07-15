@@ -43,7 +43,7 @@ cur.execute("USE medios_de_prensa") #usar la base de datos
 cur.execute("CREATE TABLE medio_de_prensa(nombre_medio VARCHAR(32) NOT NULL, region VARCHAR(16), comuna VARCHAR(64), regional_o_local ENUM ('regional','local'), idioma VARCHAR(16), pais VARCHAR(16), PRIMARY KEY(nombre_medio))")
 
 #Table noticia
-cur.execute("CREATE TABLE noticia(url VARCHAR(256), fecha_publicacion DATE, contenido TEXT, titulo VARCHAR(128), PRIMARY KEY(url))")
+cur.execute("CREATE TABLE noticia(url VARCHAR(256), fecha_publicacion DATE, contenido TEXT, titulo VARCHAR(256), PRIMARY KEY(url))")
 
 #Tabla dueño
 cur.execute("CREATE TABLE dueño(es_persona BOOL, nombre_dueño VARCHAR(32), PRIMARY KEY(nombre_dueño))")
