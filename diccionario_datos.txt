@@ -1,0 +1,44 @@
+medio_de_prensa (
+	nombre_medio VARCHAR(32) NOT NULL,
+	region VARCHAR(16),
+	comuna VARCHAR(64),
+	regional_o_local ENUM (“regional”,“local”),
+	idioma VARCHAR(16) ,
+	pais VARCHAR(16),
+	PRIMARY KEY(nombre_medio)
+)
+
+noticia (
+	url VARCHAR(256),
+	fecha_publicación DATE,
+	contenido TEXT,
+	titulo VARCHAR(128),
+	PRIMARY KEY(url)
+)
+
+dueño (
+	es_persona BOOLEAN,
+	nombre_dueño VARCHAR(32),
+	PRIMARY KEY(nombre_dueño)	
+)
+
+persona(
+	id_persona INT,
+	nombre VARCHAR(32),
+	profesion: VARCHAR(16),
+	nacionalidad: VARCHAR(16),
+	fecha_de_nacimiento: DATE,
+	pagina_wikipedia_url VARCHAR(256)
+)
+
+popularidad(
+	id_persona INT,
+    fecha DATE,
+    visitas INT,
+)
+
+tiene(
+	nombre_dueño VARCHAR(32),
+    nombre_medio VARCHAR(32) NOT NULL, 
+	fecha_de_adquisicion DATE
+)

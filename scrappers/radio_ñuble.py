@@ -1,55 +1,9 @@
 import random
 from requests_html import HTMLSession
-# from pymongo import MongoClient
 import time
 import mysql.connector as mariadb
 import sys
 import datetime
-
-#Formatear las fechas
-def format_date(date):
-    fecha = date.split("T")[0]
-    fecha_split = fecha.split("-")
-    # print(fecha_split)
-    """ f = ""
-    for i in range(len(fecha_split)-1,-1,-1):
-        if(i == 0):
-            f += fecha_split[i] 
-        else:
-            f += fecha_split[i] + "-"
-         """
-    return(fecha_split)
-
-def formatoTexto(contenido):
-    text = "";
-    for i in range(0,len(contenido)):
-        text += contenido[i] + "\n"
-
-    return text;
-
-
-def obtenerDatosUrl(url):
-    session = HTMLSession()
-    
-    response = session.get("{}".format(url), headers = headers)
-
-    xpath_fecha = "//div[@class='tdb-block-inner td-fix-index']/time/@datetime"
-    fecha = response.html.xpath(xpath_fecha)
-    fecha = format_date(fecha[0])
-
-    xpath_titulo = "//div[@class='tdb-block-inner td-fix-index']/h1/text()"
-    titulo = response.html.xpath(xpath_titulo)
-
-    xpath_contenido = "//div[@class='tdb-block-inner td-fix-index']/p/text()" 
-    contenido = response.html.xpath(xpath_contenido)
-    texto = formatoTexto(contenido)
-
-    print(fecha)
-    fecha = datetime.date(int(fecha[0]), int(fecha[1]), int(fecha[2]))
-    fecha = STR_TO_DATE(fecha, '%d/%m/%Y')
-    # fecha = '2019/01/28'
-
-    cur.execute("INSERT INTO noticia(url,titulo,contenido,fecha_publicacion) VALUES('{0}','{1}','{2}',{3})".format(url,titulo[0],texto,fecha)) #insertar datos en BD
 
 # Connect to MariaDB Platform
 try:
@@ -70,9 +24,6 @@ cur = conn.cursor()
 cur.execute("USE medios_de_prensa") #usar la base de datos
 
 session = HTMLSession()
-
-## URL "SEED" que escrapear
-URL_SEED = "https://ñubleregionnoticias.cl/"
 
 ## Simular que estamos utilizando un navegador web
 USER_AGENT_LIST = [
@@ -95,24 +46,60 @@ USER_AGENT_LIST = [
         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24",
         "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 (KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"
 ]
-
 headers = {'user-agent':random.choice(USER_AGENT_LIST) }
 
-## Analizar ("to parse") el contenido
-xpath_url = "//h3[@class='entry-title']/a/@href"
-#xpath_url2 = "//h3[@class='media-heading']/puskeleton/a/text()"
+#Formatear las fechas
+def format_date(date):
+    fecha = date.split("T")[0]
+    fecha_split = fecha.split("-")
+    fecha = datetime.date(int(fecha_split[0]), int(fecha_split[1]), int(fecha_split[2]))
 
-for i in range(1,2):
-    response = session.get("{}{}".format(URL_SEED,i), headers = headers)
-    all_urls = response.html.xpath(xpath_url)
-    print(len(all_urls)) 
+    return(fecha)
 
-    #for url in all_urls:
-        #print(url)
-       # cur.execute("DELETE FROM noticia WHERE url = '" + url + "'")
-        #obtenerDatosUrl(url);
-        
-    # time.sleep(2)
+def formatoTexto(contenido):
+    text = "";
+    for i in range(0,len(contenido)):
+        text += contenido[i] + "\n"
+    return text;
 
-conn.commit() 
-conn.close()
+def obtenerDatosUrl(url):
+    session = HTMLSession()
+    response = session.get("{}".format(url), headers = headers)
+
+    xpath_fecha = "//article/span/text()"
+    fecha = response.html.xpath(xpath_fecha)
+    if(len(fecha) == 0):
+        return
+    fecha = format_date(fecha[0])
+
+    xpath_titulo = "//article/div[@class='post_header']/h2/text()"
+    titulo = response.html.xpath(xpath_titulo)
+    if(len(titulo) == 0):
+        return
+    titulo = titulo[0]
+
+    xpath_contenido = "//div[@class='entry-content resize']/p/text()" 
+    contenido = response.html.xpath(xpath_contenido)
+    texto = formatoTexto(contenido)
+
+    cur.execute("INSERT INTO noticia(url,titulo,contenido,fecha_publicacion) VALUES('{0}','{1}','{2}','{3}')".format(url,titulo,texto,fecha)) #insertar datos en BD
+
+def extraerURL():
+    print("Medio de prensa: Radio Ñuble")
+    ## URL "SEED" que escrapear
+    URL_SEED = "https://radionuble.cl/linea/?cat=3&paged="
+    
+    ## Analizar ("to parse") el contenido
+    xpath_url = "//div[@class='content_inner']/h2/a/@href"
+
+    for i in range(1,3): #hasta la 27
+        response = session.get("{}{}/".format(URL_SEED,i),headers=headers)
+        all_urls = response.html.xpath(xpath_url)
+        for url in all_urls:
+            cur.execute("DELETE FROM noticia WHERE url = '"+url+"'")
+            obtenerDatosUrl(url)
+        all_urls.clear()
+        print("     Noticias de la pagina {} añadidas a la base de datos".format(i))
+            
+    conn.commit() 
+    conn.close()
