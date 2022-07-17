@@ -42,20 +42,23 @@ def createDB():
     #Tabla medio de prensa
     cur.execute("CREATE TABLE medio_de_prensa(nombre_medio VARCHAR(32) NOT NULL, region VARCHAR(16), comuna VARCHAR(64), regional_o_local ENUM ('regional','local'), idioma VARCHAR(16), pais VARCHAR(16), PRIMARY KEY(nombre_medio))")
 
-    #Table noticia
-    cur.execute("CREATE TABLE noticia(url VARCHAR(256), fecha_publicacion DATE, contenido TEXT, titulo VARCHAR(256), PRIMARY KEY(url))")
-
+    #Tabla tiene
+    cur.execute("CREATE TABLE tiene(nombre_dueño VARCHAR(32), nombre_medio VARCHAR(32) NOT NULL, fecha_de_adquisicion DATE, FOREIGN KEY(nombre_dueño) REFERENCES dueño(nombre_dueño), FOREIGN KEY(nombre_medio) REFERENCES medio_de_prensa(nombre_medio), PRIMARY KEY(fecha_de_adquisicion,nombre_medio))")
+    
     #Tabla dueño
     cur.execute("CREATE TABLE dueño(es_persona BOOL, nombre_dueño VARCHAR(32), PRIMARY KEY(nombre_dueño))")
+
+    #Table noticia
+    cur.execute("CREATE TABLE noticia(url VARCHAR(256),nombre_medio VARCHAR(32), fecha_publicacion DATE, contenido TEXT, titulo VARCHAR(256), PRIMARY KEY(url), FOREIGN KEY(nombre_medio) REFERENCES medio_de_prensa(nombre_medio))")
 
     #Tabla persona
     cur.execute("CREATE TABLE persona(id_persona INT AUTO_INCREMENT, nombre VARCHAR(32), profesion VARCHAR(16), nacionalidad VARCHAR(16), fecha_de_nacimiento DATE, pagina_wikipedia_url VARCHAR(256), PRIMARY KEY(id_persona))")
 
+    #Tabla menciona
+    cur.execute("CREATE TABLE menciona(id_persona INT AUTO_INCREMENT, url VARCHAR(256),FOREIGN KEY(id_persona) REFERENCES persona(id_persona),FOREIGN KEY(url) REFERENCES noticia(url) ,PRIMARY KEY(id_persona,url))")
+
     #Tabla popularidad
     cur.execute("CREATE TABLE popularidad(id_persona INT AUTO_INCREMENT, fecha DATE, visitas INT, FOREIGN KEY(id_persona) REFERENCES persona(id_persona), PRIMARY KEY(id_persona,fecha))")
-
-    #Tabla tiene
-    cur.execute("CREATE TABLE tiene(nombre_dueño VARCHAR(32), nombre_medio VARCHAR(32) NOT NULL, si_o_no BOOL, fecha_de_adquisicion DATE, FOREIGN KEY(nombre_dueño) REFERENCES dueño(nombre_dueño), FOREIGN KEY(nombre_medio) REFERENCES medio_de_prensa(nombre_medio), PRIMARY KEY(fecha_de_adquisicion,nombre_dueño))")
 
     conn.commit() 
     conn.close()

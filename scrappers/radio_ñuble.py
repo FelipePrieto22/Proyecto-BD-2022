@@ -82,10 +82,14 @@ def obtenerDatosUrl(url):
     contenido = response.html.xpath(xpath_contenido)
     texto = formatoTexto(contenido)
 
-    cur.execute("INSERT INTO noticia(url,titulo,contenido,fecha_publicacion) VALUES('{0}','{1}','{2}','{3}')".format(url,titulo,texto,fecha)) #insertar datos en BD
+    cur.execute("INSERT INTO noticia(url,titulo,contenido,fecha_publicacion,nombre_medio) VALUES('{0}','{1}','{2}','{3}','{4}')".format(url,titulo,texto,fecha,nombre_medio)) #insertar datos en BD
+
+nombre_medio = "Radio Ñuble"
 
 def extraerURL():
     print("Medio de prensa: Radio Ñuble")
+    cur.execute("INSERT INTO medio_de_prensa(comuna,region,region_o_local,idioma,pais,nombre_medio) VALUES('ñuble','ñuble','region','español','chile','{1}')".format(nombre_medio))
+
     ## URL "SEED" que escrapear
     URL_SEED = "https://radionuble.cl/linea/?cat=3&paged="
     
