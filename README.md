@@ -6,6 +6,7 @@ Nombre Región: Región del ñuble
 
 
 Medios de prensas:
+
 Comuna: Chillan
 
 	nombre: Chillan Activo  
