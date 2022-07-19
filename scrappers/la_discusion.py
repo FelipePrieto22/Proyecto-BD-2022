@@ -65,7 +65,6 @@ def formatoTexto(contenido):
     return text;
 
 def obtenerDatosUrl(url):
-    session = HTMLSession()
     response = session.get("{}".format(url), headers = headers)
 
     xpath_fecha = "//span[@class='posted-on']/time/@datetime"

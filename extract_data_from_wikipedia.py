@@ -12,4 +12,6 @@ def obtener_info(persona):
     rango_fechas_pop = ""
     lista_datos = [profesion,fecha_nacimiento,popularidad,rango_fechas_pop]
 
+
+
     return lista_datos

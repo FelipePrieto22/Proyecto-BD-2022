@@ -65,7 +65,6 @@ def formatoTexto(contenido):
     return text;
 
 def obtenerDatosUrl(url):
-    session = HTMLSession()
     response = session.get("{}".format(url), headers = headers)
 
     xpath_fecha = "//article/span/text()"
@@ -88,7 +87,7 @@ def obtenerDatosUrl(url):
 
 def extraerURL():
     print("Medio de prensa: Radio Ñuble")
-    cur.execute("INSERT INTO medio_de_prensa(comuna,region,regional_o_local,idioma,pais,nombre_medio) VALUES('ñuble','ñuble','region','español','chile','{0}')".format(nombre_medio))
+    cur.execute("INSERT INTO medio_de_prensa(comuna,region,regional_o_local,idioma,pais,nombre_medio) VALUES('ñuble','ñuble','regional','español','chile','{0}')".format(nombre_medio))
 
     ## URL "SEED" que escrapear
     URL_SEED = "https://radionuble.cl/linea/?cat=3&paged="

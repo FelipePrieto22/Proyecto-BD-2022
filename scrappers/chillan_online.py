@@ -65,7 +65,6 @@ def formatoTexto(contenido):
     return text;
 
 def obtenerDatosUrl(url):
-    session = HTMLSession()
     response = session.get("{}".format(url), headers = headers)
 
     xpath_fecha = "//div[@class='tdb-block-inner td-fix-index']/time/@datetime"
@@ -85,6 +84,7 @@ def obtenerDatosUrl(url):
     texto = formatoTexto(contenido)
 
     cur.execute("INSERT INTO noticia(url,titulo,contenido,fecha_publicacion,nombre_medio) VALUES('{0}','{1}','{2}','{3}','{4}')".format(url,titulo,texto,fecha,nombre_medio)) #insertar datos en BD
+
 
 def extraerURL():
     print("Medio de prensa: Chillan Online")
