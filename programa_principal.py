@@ -15,17 +15,16 @@ def main():
 
     print("\nInsertando datos con scrappers...")
     mdp1.extraerURL()
-    mdp2.extraerURL() #corregir error  que aparece derrepente [SSL: DECRYPTION_FAILED_OR_BAD_RECORD_MAC] decryption failed or bad record mac (_ssl.c:2633)
-    mdp3.extraerURL()
+    """ mdp2.extraerURL()
+    mdp3.extraerURL() """
     print("Datos insertados correctamente")
 
-    #####################|añadir insert_auto|#########################
-    #ia.insertarAuto()
-    
-    ################################################################
+    print("Insertando datos de forma automatica...")
+    ia.insertarAuto()
+    print("Datos insertados de forma correcta")
 
     print("\nGuardando una copia de seguridad de la base de datos...")
     cd.createDump()
-    print("Respaldo de la base de datos creado exitosamente")
+    print("Respaldo de la base de datos creado correctamente")
 
 main()

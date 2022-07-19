@@ -5,7 +5,6 @@ medio_de_prensa (
 	regional_o_local ENUM (“regional”,“local”),
 	idioma VARCHAR(16) ,
 	pais VARCHAR(16),
-	PRIMARY KEY(nombre_medio)
 )
 
 noticia (
@@ -13,13 +12,11 @@ noticia (
 	fecha_publicación DATE,
 	contenido TEXT,
 	titulo VARCHAR(128),
-	PRIMARY KEY(url)
 )
 
 dueño (
 	es_persona BOOLEAN,
 	nombre_dueño VARCHAR(32),
-	PRIMARY KEY(nombre_dueño)	
 )
 
 persona(
@@ -41,4 +38,9 @@ tiene(
 	nombre_dueño VARCHAR(32),
     nombre_medio VARCHAR(32) NOT NULL, 
 	fecha_de_adquisicion DATE
+)
+
+menciona(
+	id_persona INT,
+	url VARCHAR(256)
 )

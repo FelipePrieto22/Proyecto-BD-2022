@@ -27,11 +27,7 @@ def insertarAuto():
         lista_personas = ep.extraer_personas(row[0])
         for persona in lista_personas:
             print(persona)
-            informacion_persona = edw.obtener_info(persona)
-            #insertar en base de datos...
-            print(informacion_persona)
-    
-        cur.execute("INSERT INTO persona() VALUES('{}','{}','{}','{}')".format())
-
+            edw.obtener_info(persona)
+           
     conn.commit() 
     conn.close()
