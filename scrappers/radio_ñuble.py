@@ -88,7 +88,7 @@ nombre_medio = "Radio Ñuble"
 
 def extraerURL():
     print("Medio de prensa: Radio Ñuble")
-    cur.execute("INSERT INTO medio_de_prensa(comuna,region,region_o_local,idioma,pais,nombre_medio) VALUES('ñuble','ñuble','region','español','chile','{1}')".format(nombre_medio))
+    cur.execute("INSERT INTO medio_de_prensa(comuna,region,regional_o_local,idioma,pais,nombre_medio) VALUES('ñuble','ñuble','region','español','chile','{0}')".format(nombre_medio))
 
     ## URL "SEED" que escrapear
     URL_SEED = "https://radionuble.cl/linea/?cat=3&paged="
