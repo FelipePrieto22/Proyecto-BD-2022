@@ -1,4 +1,4 @@
-import create_db as db
+import create_db as cdb
 import insert_manual as im
 import scrappers.chillan_online as mdp1 # medio de prensa(mdp)
 import scrappers.la_discusion as mdp2
@@ -7,7 +7,7 @@ import create_dump as cd
 # import insert_auto as ia
 
 def main():
-    db.createDB() # crea la base de datos localmente y en caso de exisitir la elimina y la crea de nuevo
+    cdb.createDB() # crea la base de datos localmente y en caso de exisitir la elimina y la crea de nuevo
 
     print("\nInsertando datos de forma manual...")
     im.insertarDatos() #inserta datos manualmente

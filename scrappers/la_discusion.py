@@ -5,6 +5,8 @@ import mysql.connector as mariadb
 import sys
 import datetime
 
+nombre_medio = "La Discusión"
+
 # Connect to MariaDB Platform
 try:
     conn = mariadb.connect(
@@ -84,8 +86,6 @@ def obtenerDatosUrl(url):
     texto = formatoTexto(contenido) 
 
     cur.execute("INSERT INTO noticia(url,titulo,contenido,fecha_publicacion,nombre_medio) VALUES('{0}','{1}','{2}','{3}','{4}')".format(url,titulo,texto,fecha,nombre_medio)) #insertar datos en BD
-
-nombre_medio = "La Discusión"
 
 def extraerURL():
     print("Medio de prensa: La Discusión")
