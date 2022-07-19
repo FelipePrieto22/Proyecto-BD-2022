@@ -42,12 +42,12 @@ def createDB():
     #Tabla medio de prensa
     cur.execute("CREATE TABLE medio_de_prensa(nombre_medio VARCHAR(32) NOT NULL, region VARCHAR(16), comuna VARCHAR(64), regional_o_local ENUM ('regional','local'), idioma VARCHAR(16), pais VARCHAR(16), PRIMARY KEY(nombre_medio))")
 
-    #Tabla tiene
-    cur.execute("CREATE TABLE tiene(nombre_dueño VARCHAR(32), nombre_medio VARCHAR(32) NOT NULL, fecha_de_adquisicion DATE, FOREIGN KEY(nombre_dueño) REFERENCES dueño(nombre_dueño), FOREIGN KEY(nombre_medio) REFERENCES medio_de_prensa(nombre_medio), PRIMARY KEY(fecha_de_adquisicion,nombre_medio))")
-    
     #Tabla dueño
     cur.execute("CREATE TABLE dueño(es_persona BOOL, nombre_dueño VARCHAR(32), PRIMARY KEY(nombre_dueño))")
 
+    #Tabla tiene
+    cur.execute("CREATE TABLE tiene(nombre_dueño VARCHAR(32), nombre_medio VARCHAR(32) NOT NULL, fecha_de_adquisicion DATE, FOREIGN KEY(nombre_dueño) REFERENCES dueño(nombre_dueño), FOREIGN KEY(nombre_medio) REFERENCES medio_de_prensa(nombre_medio), PRIMARY KEY(fecha_de_adquisicion,nombre_medio))")
+    
     #Table noticia
     cur.execute("CREATE TABLE noticia(url VARCHAR(256),nombre_medio VARCHAR(32), fecha_publicacion DATE, contenido TEXT, titulo VARCHAR(256), PRIMARY KEY(url), FOREIGN KEY(nombre_medio) REFERENCES medio_de_prensa(nombre_medio))")
 

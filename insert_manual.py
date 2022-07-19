@@ -26,7 +26,7 @@ def insertarDatos():
 
     #Añadir a tabla noticia
     cur.execute("DELETE FROM noticia WHERE url = 'https://www.meganoticias.cl/nacional/379541-ipc-chile-mayo-2022-inflacion-en-chile-08-06-2022.html'")
-    cur.execute("INSERT INTO noticia(url,fecha_publicacion,contenido,titulo) VALUES('https://www.meganoticias.cl/nacional/379541-ipc-chile-mayo-2022-inflacion-en-chile-08-06-2022.html','08-05-22','TEXTO','Inflación acumulada más alta en 28 años: IPC anota alza de 1,2%')")
+    cur.execute("INSERT INTO noticia(url,fecha_publicacion,contenido,titulo,nombre_medio) VALUES('https://www.meganoticias.cl/nacional/379541-ipc-chile-mayo-2022-inflacion-en-chile-08-06-2022.html','08-05-22','TEXTO','Inflación acumulada más alta en 28 años: IPC anota alza de 1,2%','mega')")
 
     #Añadir a tabla dueño
     cur.execute("DELETE FROM dueño WHERE nombre_dueño ='Arnold Schwarzenegger'")
@@ -42,7 +42,7 @@ def insertarDatos():
 
     #Añadir a tabla tiene
     cur.execute("DELETE FROM tiene WHERE nombre_dueño = 'Arnold Schwarzenegger'")
-    cur.execute("INSERT INTO tiene(nombre_dueño, nombre_medio, si_o_no, fecha_de_adquisicion) VALUES('Arnold Schwarzenegger','mega',1,'10-01-10')")
+    cur.execute("INSERT INTO tiene(nombre_dueño, nombre_medio, fecha_de_adquisicion) VALUES('Arnold Schwarzenegger','mega','10-01-10')")
 
     conn.commit() 
     conn.close()
