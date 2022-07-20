@@ -2,7 +2,6 @@ import spacy
 
 def extraer_personas(texto):
     nlp = spacy.load("es_core_news_md")
-    
     doc = nlp(texto)
     personas = []
     for ent in doc.ents:

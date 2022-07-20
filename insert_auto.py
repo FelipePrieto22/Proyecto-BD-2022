@@ -22,11 +22,18 @@ def insertarAuto():
 
     cur.execute("USE medios_de_prensa") #usar la base de datos
 
-    cur.execute("SELECT contenido FROM noticia;")
+    cur.execute("SELECT contenido, url FROM noticia;")
     for row in cur.fetchall(): #todos: fetchall , el primero fetchone
         lista_personas = ep.extraer_personas(row[0])
-        for persona in lista_personas:
-            edw.obtener_info(persona)
-           
+        print(lista_personas)
+        result = []
+        for item in lista_personas:
+            if item not in result:
+                result.append(item)
+        print(result)  
+        for persona in result:
+            edw.obtener_info(persona,row[1])
+    
     conn.commit() 
+
     conn.close()

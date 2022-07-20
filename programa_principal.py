@@ -18,8 +18,8 @@ def main():
 
     print("\nInsertando datos con scrappers...")
     mdp1.extraerURL()
-    """ mdp2.extraerURL()
-    mdp3.extraerURL() """
+    # mdp2.extraerURL()
+    # mdp3.extraerURL()
     print("Datos insertados correctamente")
 
     print("Insertando datos de forma automatica...")

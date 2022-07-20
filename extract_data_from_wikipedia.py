@@ -32,7 +32,7 @@ except mariadb.Error as e:
     print(f"Error connecting to MariaDB Platform: {e}")
     sys.exit(1)
 
-def obtener_info(persona):
+def obtener_info(persona, url_noticia):
     conn.reconnect()
     cur = conn.cursor()
     cur.execute("USE medios_de_prensa") #usar la base de datos
@@ -40,7 +40,12 @@ def obtener_info(persona):
     try:
         print("Agregando nombre <{}> a la base de datos...".format(persona))
         cur.execute("INSERT INTO persona(nombre) VALUES('{0}')".format(persona))
-        conn.commit() 
+        conn.commit()
+        cur.execute("SELECT id_persona FROM persona WHERE nombre = '{0}';".format(persona))
+        id_persona = cur.fetchone()[0]
+        cur.execute("INSERT INTO menciona(id_persona,url) VALUES('{}','{}')".format(id_persona,url_noticia))
+        conn.commit()
+         
     except mariadb.IntegrityError:
         print("{} ya fue añadido a la base de Datos".format(persona))
         return
@@ -79,9 +84,11 @@ def obtener_info(persona):
     #Rodrigo Cerda
     #insertar en base de datos...
     print("Agregando datos a la base de datos...")
-    cur.execute("REPLACE INTO persona(nombre,profesion,fecha_de_nacimiento,nacionalidad,pagina_wikipedia_url) VALUES('{0}','{1}','{2}','{3}','{4}')".format(persona,profesion,fecha_nacimiento,nacionalidad,url))
+    cur.execute("SELECT id_persona FROM persona WHERE nombre = '{0}';".format(persona))
+    id_persona = cur.fetchone()[0]
+    cur.execute("UPDATE persona SET profesion = '{0}',fecha_de_nacimiento = '{1}',nacionalidad = '{2}',pagina_wikipedia_url = '{3}' WHERE id_persona = '{4}'".format(profesion,fecha_nacimiento,nacionalidad,url,id_persona))
+    # cur.execute("REPLACE INTO persona(nombre,profesion,fecha_de_nacimiento,nacionalidad,pagina_wikipedia_url) VALUES('{0}','{1}','{2}','{3}','{4}')".format(persona,profesion,fecha_nacimiento,nacionalidad,url))
     conn.commit() 
- 
 
     result = pageviewapi.per_article('es.wikipedia', persona, '20220601', '20220630',
                        access='all-access', agent='all-agents', granularity='daily')
@@ -97,6 +104,7 @@ def obtener_info(persona):
             cur.execute("SELECT id_persona FROM persona WHERE nombre = '{0}';".format(persona))
             id_persona = cur.fetchone()[0]
             cur.execute("INSERT INTO popularidad(fecha,id_persona,visitas) VALUES('{}','{}','{}')".format(fecha,id_persona,visitas))
+            
 
     conn.commit() 
-    conn.close()
+    conn.close()    
