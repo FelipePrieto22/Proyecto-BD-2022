@@ -25,12 +25,10 @@ def insertarAuto():
     cur.execute("SELECT contenido, url FROM noticia;")
     for row in cur.fetchall(): #todos: fetchall , el primero fetchone
         lista_personas = ep.extraer_personas(row[0])
-        print(lista_personas)
         result = []
         for item in lista_personas:
             if item not in result:
                 result.append(item)
-        print(result)  
         for persona in result:
             edw.obtener_info(persona,row[1])
     
