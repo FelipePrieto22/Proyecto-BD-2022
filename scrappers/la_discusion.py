@@ -59,10 +59,10 @@ def format_date(date):
     return(fecha)
 
 def formatoTexto(contenido):
-    text = "";
+    text = ""
     for i in range(0,len(contenido)):
         text += contenido[i] + "\n"
-    return text;
+    return text
 
 def obtenerDatosUrl(url):
     response = session.get("{}".format(url), headers = headers)

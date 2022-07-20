@@ -16,8 +16,8 @@ def createDB():
         sys.exit(1)
 
     # Get Cursor
+    
     cur = conn.cursor()
-
     cur.execute("SHOW DATABASES like 'medios_de_prensa'")
 
     registro = cur.fetchall() #Para si existe la base de datos
@@ -52,7 +52,7 @@ def createDB():
     cur.execute("CREATE TABLE noticia(url VARCHAR(256),nombre_medio VARCHAR(32), fecha_publicacion DATE, contenido TEXT, titulo VARCHAR(256), PRIMARY KEY(url), FOREIGN KEY(nombre_medio) REFERENCES medio_de_prensa(nombre_medio))")
 
     #Tabla persona
-    cur.execute("CREATE TABLE persona(id_persona INT AUTO_INCREMENT, nombre VARCHAR(32), profesion VARCHAR(16), nacionalidad VARCHAR(16), fecha_de_nacimiento DATE, pagina_wikipedia_url VARCHAR(256), PRIMARY KEY(id_persona))")
+    cur.execute("CREATE TABLE persona(id_persona INT AUTO_INCREMENT, nombre VARCHAR(256) UNIQUE, profesion VARCHAR(256), nacionalidad VARCHAR(16), fecha_de_nacimiento DATE, pagina_wikipedia_url VARCHAR(256), PRIMARY KEY(id_persona))")
 
     #Tabla menciona
     cur.execute("CREATE TABLE menciona(id_persona INT AUTO_INCREMENT, url VARCHAR(256),FOREIGN KEY(id_persona) REFERENCES persona(id_persona),FOREIGN KEY(url) REFERENCES noticia(url) ,PRIMARY KEY(id_persona,url))")
