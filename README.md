@@ -1,4 +1,9 @@
-﻿Integrantes: Hernan Cornejo
+﻿
+Ejecutar pip install -r requirements.txt
+
+Ejecutar utilizando programa_principal.py
+
+Integrantes: Hernan Cornejo
              Felipe Prieto
              Alejandro Villagrán
              

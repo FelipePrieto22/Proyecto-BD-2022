@@ -1,6 +1,5 @@
 #pip install python-dateutil 
 import mysql.connector as mariadb
-# from mysql.connector.errors import Error 
 import sys
 import spacy
 import datetime
@@ -8,7 +7,6 @@ import wikipedia
 from dateutil.parser import parse
 wikipedia.set_lang("es")
 import pageviewapi
-
 from transformers import AutoModelForQuestionAnswering, AutoTokenizer
 from transformers import pipeline
 
@@ -52,7 +50,6 @@ def obtener_info(persona, url_noticia):
         
     try:
         print("Obteniendo informacion desde wikipedia: {}".format(persona))
-        # results = wikipedia.search(persona)
         summary = wikipedia.summary(persona, sentences = 1, auto_suggest = False)
     except wikipedia.exceptions.PageError:
         print("Esta persona <{}> no tiene pagina de wikipedia".format(persona))
@@ -71,7 +68,6 @@ def obtener_info(persona, url_noticia):
     
     fecha_nacimiento = datetime.date(int(fecha_nacimiento.split(" ")[0]), 1, 1)
 
-
     result = q_a_es(question = "¿Cuál es su profesión?", context = summary)
     profesion = result["answer"]
 
@@ -80,14 +76,13 @@ def obtener_info(persona, url_noticia):
 
 
     url = wikipedia.page(persona).url
-
-    #Rodrigo Cerda
+    
     #insertar en base de datos...
     print("Agregando datos a la base de datos...")
     cur.execute("SELECT id_persona FROM persona WHERE nombre = '{0}';".format(persona))
     id_persona = cur.fetchone()[0]
     cur.execute("UPDATE persona SET profesion = '{0}',fecha_de_nacimiento = '{1}',nacionalidad = '{2}',pagina_wikipedia_url = '{3}' WHERE id_persona = '{4}'".format(profesion,fecha_nacimiento,nacionalidad,url,id_persona))
-    # cur.execute("REPLACE INTO persona(nombre,profesion,fecha_de_nacimiento,nacionalidad,pagina_wikipedia_url) VALUES('{0}','{1}','{2}','{3}','{4}')".format(persona,profesion,fecha_nacimiento,nacionalidad,url))
+
     conn.commit() 
 
     result = pageviewapi.per_article('es.wikipedia', persona, '20220601', '20220630',
